@@ -5,9 +5,7 @@ function MainNavigation () {
   return (
     <header className='flex justify-between h-20 w-full bg-orange-400'>
       <Link href='/'>
-        <a>
-          <div className=''>Next Auth</div>
-        </a>
+        <div className=''>Next Auth</div>
       </Link>
       <nav>
         <ul>
