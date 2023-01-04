@@ -3,10 +3,10 @@ import React from 'react'
 const register = () => {
    return (
       <div
-         class="min-h-screen flex flex-col items-center justify-center bg-gray-100"
+         className="min-h-screen flex flex-col items-center justify-center bg-gray-100"
       >
          <div
-            class="
+            className="
           flex flex-col
           bg-white
           shadow-md
@@ -20,24 +20,24 @@ const register = () => {
           max-w-md
         "
          >
-            <div class="font-medium self-center text-xl sm:text-3xl text-gray-800">
+            <div className="font-medium self-center text-xl sm:text-3xl text-gray-800">
                Join us Now
             </div>
-            <div class="mt-4 self-center text-xl sm:text-sm text-gray-800">
+            <div className="mt-4 self-center text-xl sm:text-sm text-gray-800">
                Enter your credentials to get access account
             </div>
 
-            <div class="mt-10">
-               <form action="#">
-                  <div class="flex flex-col mb-5">
+            <div className="mt-10">
+               <form>
+                  <div className="flex flex-col mb-5">
                      <label
                         for="email"
-                        class="mb-1 text-xs tracking-wide text-gray-600"
+                        className="mb-1 text-xs tracking-wide text-gray-600"
                      >Name:</label
                      >
-                     <div class="relative">
+                     <div className="relative">
                         <div
-                           class="
+                           className="
                     inline-flex
                     items-center
                     justify-center
@@ -49,14 +49,14 @@ const register = () => {
                     text-gray-400
                   "
                         >
-                           <i class="fas fa-user text-blue-500"></i>
+                           <i className="fas fa-user text-blue-500"></i>
                         </div>
 
                         <input
                            id="email"
                            type="email"
                            name="email"
-                           class="
+                           className="
                     text-sm
                     placeholder-gray-500
                     pl-10
@@ -71,15 +71,15 @@ const register = () => {
                         />
                      </div>
                   </div>
-                  <div class="flex flex-col mb-5">
+                  <div className="flex flex-col mb-5">
                      <label
                         for="email"
-                        class="mb-1 text-xs tracking-wide text-gray-600"
+                        className="mb-1 text-xs tracking-wide text-gray-600"
                      >E-Mail Address:</label
                      >
-                     <div class="relative">
+                     <div className="relative">
                         <div
-                           class="
+                           className="
                     inline-flex
                     items-center
                     justify-center
@@ -91,14 +91,14 @@ const register = () => {
                     text-gray-400
                   "
                         >
-                           <i class="fas fa-at text-blue-500"></i>
+                           <i className="fas fa-at text-blue-500"></i>
                         </div>
 
                         <input
                            id="email"
                            type="email"
                            name="email"
-                           class="
+                           className="
                     text-sm
                     placeholder-gray-500
                     pl-10
@@ -113,15 +113,15 @@ const register = () => {
                         />
                      </div>
                   </div>
-                  <div class="flex flex-col mb-6">
+                  <div className="flex flex-col mb-6">
                      <label
                         for="password"
-                        class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
+                        className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
                      >Password:</label
                      >
-                     <div class="relative">
+                     <div className="relative">
                         <div
-                           class="
+                           className="
                     inline-flex
                     items-center
                     justify-center
@@ -134,7 +134,7 @@ const register = () => {
                   "
                         >
                            <span>
-                              <i class="fas fa-lock text-blue-500"></i>
+                              <i className="fas fa-lock text-blue-500"></i>
                            </span>
                         </div>
 
@@ -142,7 +142,7 @@ const register = () => {
                            id="password"
                            type="password"
                            name="password"
-                           class="
+                           className="
                     text-sm
                     placeholder-gray-500
                     pl-10
@@ -158,10 +158,10 @@ const register = () => {
                      </div>
                   </div>
 
-                  <div class="flex w-full">
+                  <div className="flex w-full">
                      <button
                         type="submit"
-                        class="
+                        className="
                   flex
                   mt-2
                   items-center
@@ -179,10 +179,10 @@ const register = () => {
                   ease-in
                 "
                      >
-                        <span class="mr-2 uppercase">Sign Up</span>
+                        <span className="mr-2 uppercase">Sign Up</span>
                         <span>
                            <svg
-                              class="h-6 w-6"
+                              className="h-6 w-6"
                               fill="none"
                               stroke-linecap="round"
                               stroke-linejoin="round"
@@ -200,11 +200,11 @@ const register = () => {
                </form>
             </div>
          </div>
-         <div class="flex justify-center items-center mt-6">
+         <div className="flex justify-center items-center mt-6">
             <a
                href="#"
                target="_blank"
-               class="
+               className="
             inline-flex
             items-center
             text-gray-700
@@ -212,11 +212,11 @@ const register = () => {
             text-xs text-center
           "
             >
-               <span class="ml-2"
+               <span className="ml-2"
                >You have an account?
                   <a
                      href="#"
-                     class="text-xs ml-2 text-blue-500 font-semibold"
+                     className="text-xs ml-2 text-blue-500 font-semibold"
                   >Login here</a
                   ></span
                >
