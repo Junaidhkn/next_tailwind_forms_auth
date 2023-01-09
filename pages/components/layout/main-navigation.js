@@ -18,6 +18,13 @@ function MainNavigation() {
 					<li className='border px-3 py-2 hover:bg-slate-200'>
 						<Link
 							className='px-3 py-2'
+							href='/auth/register'>
+							Register
+						</Link>
+					</li>
+					<li className='border px-3 py-2 hover:bg-slate-200'>
+						<Link
+							className='px-3 py-2'
 							href='/auth/profile'>
 							Profile
 						</Link>
