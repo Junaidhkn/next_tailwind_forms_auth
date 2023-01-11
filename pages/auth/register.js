@@ -1,6 +1,37 @@
 import Link from 'next/link.js';
+import { useRef } from 'react';
 
 const register = () => {
+	const nameInputRef = useRef();
+	const emailInputRef = useRef();
+	const passwordInputRef = useRef();
+	const createUser = async (name, email, password) => {
+		const response = await fetch('/api/auth/signup', {
+			method: 'POST',
+			body: JSON.stringify({ name, email, password }),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await response.json();
+		if (!response.ok) {
+			throw new Error(data.message || 'Something Went Wrong!');
+		}
+
+		return data;
+	};
+
+	const submitHandler = (e) => {
+		e.preventDefault();
+		const name = nameInputRef.current.value;
+		const email = emailInputRef.current.value;
+		const password = passwordInputRef.current.value;
+		createUser(name, email, password);
+		nameInputRef.current.value = '';
+		emailInputRef.current.value = '';
+		passwordInputRef.current.value = '';
+	};
+
 	return (
 		<div className='min-h-screen flex flex-col items-center justify-center bg-gray-100'>
 			<div className='flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-3xl w-50 max-w-md'>
@@ -11,7 +42,7 @@ const register = () => {
 					Enter your credentials to get access account
 				</div>
 				<div className='mt-10'>
-					<form>
+					<form onSubmit={submitHandler}>
 						<div className='flex flex-col mb-6'>
 							<label
 								htmlFor='name'
@@ -36,6 +67,7 @@ const register = () => {
 									id='name'
 									type='name'
 									name='name'
+									ref={nameInputRef}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='Enter your name'
 								/>
@@ -65,6 +97,7 @@ const register = () => {
 									id='email'
 									type='email'
 									name='email'
+									ref={emailInputRef}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='E-Mail Address'
 								/>
@@ -96,6 +129,7 @@ const register = () => {
 									id='password'
 									type='password'
 									name='password'
+									ref={passwordInputRef}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='Password'
 								/>
