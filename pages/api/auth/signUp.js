@@ -1,8 +1,10 @@
 import { hashPassword } from "../../../helper/auth.js";
-import { connectDB, User } from "../../../helper/db.js";
+import { connectDB } from "../../../helper/db.js";
+import User from "../../../helper/db.js";
 
-export default function handler ( req, res ) {
-   connectDB()
+export default async function handler ( req, res ) {
+   console.log( User )
+   await connectDB()
    const data = req.body
 
    const { name, email, password } = data;
@@ -15,7 +17,12 @@ export default function handler ( req, res ) {
    }
    const saltedPassword = hashPassword( password )
 
-   const newUser = new User( { name, email, password: saltedPassword } )
+   const newUser = { name: name, email: email, password: saltedPassword }
 
-
+   try {
+      const user = JSON.stringify( newUser )
+      res.json( user );
+   } catch ( err ) {
+      res.status( 500 ).json( err );
+   }
 }
