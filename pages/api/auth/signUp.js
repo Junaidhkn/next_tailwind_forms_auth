@@ -1,9 +1,8 @@
-import { hashPassword } from "../../../helper/auth.js";
 import { connectDB } from "../../../helper/db.js";
-import User from "../../../helper/db.js";
+import User from "../../../model/User.js";
+import { hash } from "bcryptjs";
 
 export default async function handler ( req, res ) {
-   console.log( User )
    await connectDB()
    const data = req.body
 
@@ -15,13 +14,13 @@ export default async function handler ( req, res ) {
       } )
       return;
    }
-   const saltedPassword = hashPassword( password )
+   const saltedPassword = await hash( password, 12 )
 
-   const newUser = { name: name, email: email, password: saltedPassword }
+   const newUser = new User( { name: name, email: email, password: saltedPassword } )
 
    try {
-      const user = JSON.stringify( newUser )
-      res.json( user );
+      const user = await newUser.save()
+      res.status( 201 ).json( user );
    } catch ( err ) {
       res.status( 500 ).json( err );
    }
