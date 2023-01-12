@@ -1,42 +1,58 @@
 import Link from 'next/link.js';
 import { useRef, useState } from 'react';
 import { HiFingerPrint } from 'react-icons/hi';
+import { useFormik } from 'formik';
+import { validateRegister } from '../../helper/validate.js';
 
 const register = () => {
-	const [type, setType] = useState(true);
+	const [type, setType] = useState( true );
 	const typeToggler = () => {
-		setType(!type);
+		setType( !type );
 	};
+
+	const formik = useFormik( {
+		initialValues: {
+			name: '',
+			email: '',
+			password: '',
+			cpassword: ''
+		},
+		validate: validateRegister,
+		onSubmit: async ( values ) => {
+			console.log( values )
+		}
+	} )
 
 	const nameInputRef = useRef();
 	const emailInputRef = useRef();
 	const passwordInputRef = useRef();
 	const cpasswordInputRef = useRef();
-	const createUser = async (name, email, password) => {
-		const response = await fetch('/api/auth/signup', {
+	const createUser = async ( name, email, password ) => {
+		const response = await fetch( '/api/auth/signup', {
 			method: 'POST',
-			body: JSON.stringify({ name, email, password }),
+			body: JSON.stringify( { name, email, password } ),
 			headers: {
 				'Content-Type': 'application/json',
 			},
-		});
+		} );
 		const data = await response.json();
-		if (!response.ok) {
-			throw new Error(data.message || 'Something Went Wrong!');
+		if ( !response.ok ) {
+			throw new Error( data.message || 'Something Went Wrong!' );
 		}
 
 		return data;
 	};
 
-	const submitHandler = (e) => {
+	const submitHandler = ( e ) => {
 		e.preventDefault();
 		const name = nameInputRef.current.value;
 		const email = emailInputRef.current.value;
 		const password = passwordInputRef.current.value;
-		createUser(name, email, password);
+		createUser( name, email, password );
 		nameInputRef.current.value = '';
 		emailInputRef.current.value = '';
 		passwordInputRef.current.value = '';
+		cpasswordInputRef.current.value = '';
 	};
 
 	return (
@@ -49,7 +65,7 @@ const register = () => {
 					Enter your credentials to get access account
 				</div>
 				<div className='mt-10'>
-					<form onSubmit={submitHandler}>
+					<form onSubmit={formik.handleSubmit}>
 						<div className='flex flex-col mb-6'>
 							<label
 								htmlFor='name'
@@ -75,6 +91,7 @@ const register = () => {
 									type='name'
 									name='name'
 									ref={nameInputRef}
+									{...formik.getFieldProps( 'name' )}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='Enter your name'
 								/>
@@ -105,6 +122,7 @@ const register = () => {
 									type='email'
 									name='email'
 									ref={emailInputRef}
+									{...formik.getFieldProps( 'email' )}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='E-Mail Address'
 								/>
@@ -137,6 +155,7 @@ const register = () => {
 									type={type ? 'password' : 'text'}
 									name='password'
 									ref={passwordInputRef}
+									{...formik.getFieldProps( 'password' )}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='Password'
 								/>
@@ -175,6 +194,7 @@ const register = () => {
 									type={type ? 'password' : 'text'}
 									name='cpassword'
 									ref={cpasswordInputRef}
+									{...formik.getFieldProps( 'cpassword' )}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='Confirm Password'
 								/>

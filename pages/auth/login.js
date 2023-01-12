@@ -3,15 +3,30 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link.js';
 import { useState } from 'react';
 import { HiFingerPrint } from 'react-icons/hi';
+import { useFormik } from 'formik';
+import { validateLogin } from '../../helper/validate.js';
 
 const login = () => {
-	const [type, setType] = useState(true);
+	const [type, setType] = useState( true );
 	const typeToggler = () => {
-		setType(!type);
+		setType( !type );
 	};
 
+	const formik = useFormik( {
+		initialValues: {
+			email: '',
+			password: ''
+		},
+		validate: validateLogin,
+		onSubmit: async ( values ) => {
+			console.log( values )
+		}
+	} )
+
+
+
 	const handleGoogleSignIn = async () => {
-		signIn('google', { callbackUrl: 'http://localhost:3000' });
+		signIn( 'google', { callbackUrl: 'http://localhost:3000' } );
 	};
 	return (
 		<div className='min-h-screen flex flex-col items-center justify-center bg-gray-300'>
@@ -39,7 +54,7 @@ const login = () => {
 					</div>
 				</div>
 				<div className='mt-10'>
-					<form>
+					<form onSubmit={formik.handleSubmit}>
 						<div className='flex flex-col mb-6'>
 							<label
 								htmlFor='email'
@@ -64,10 +79,13 @@ const login = () => {
 									id='email'
 									type='email'
 									name='email'
+									onChange={formik.handleChange}
+									value={formik.values.email}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='E-Mail Address'
 								/>
 							</div>
+							{formik.errors.email && formik.touched.email ? <span className='text-red-600'>{formik.errors.email}</span> : <span></span>}
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -94,6 +112,8 @@ const login = () => {
 									id='password'
 									type={type ? 'password' : 'text'}
 									name='password'
+									onChange={formik.handleChange}
+									value={formik.values.password}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='Password'
 								/>
@@ -103,7 +123,9 @@ const login = () => {
 									className='absolute top-[5px] right-3 cursor-pointer p-2'>
 									<HiFingerPrint />
 								</button>
+
 							</div>
+							{formik.errors.password && formik.touched.password ? <span className='text-red-600'>{formik.errors.password}</span> : <span></span>}
 						</div>
 
 						<div className='flex items-center mb-6 -mt-4'>
