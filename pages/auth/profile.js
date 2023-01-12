@@ -1,7 +1,9 @@
 import { HiFingerPrint } from 'react-icons/hi';
+import { getSession, useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 
 const profile = () => {
+	const { data: session } = useSession();
 	const [type, setType] = useState(true);
 	const typeToggler = () => {
 		setType(!type);
@@ -11,11 +13,13 @@ const profile = () => {
 			<div className='font-medium self-center text-xl sm:text-3xl text-gray-800'>
 				User Profile
 			</div>
-			<div className='flex flex-col justify-center items-center mt-4 self-center text-xl sm:text-sm text-gray-800'>
-				<h2 className='font-4xl font-bold'>Profile Page (Authorized!)</h2>
-				<h3>Name</h3>
-				<h3>Email</h3>
-			</div>
+			{session && (
+				<div className='flex flex-col justify-center items-center mt-4 self-center text-xl sm:text-sm text-gray-800'>
+					<h2 className='font-4xl font-bold'>Profile Page (Authorized!)</h2>
+					<h3>{session.user.name}</h3>
+					<h3>{session.user.email}</h3>
+				</div>
+			)}
 			<div className='mt-10'>
 				<form>
 					<div className='flex flex-col mb-6'>
@@ -117,3 +121,22 @@ const profile = () => {
 };
 
 export default profile;
+
+export const getServerSideProps = async ({ req }) => {
+	const session = await getSession({ req });
+
+	if (!session) {
+		return {
+			redirect: {
+				destination: '/auth/login',
+				permanent: false,
+			},
+		};
+	}
+
+	return {
+		props: {
+			session,
+		},
+	};
+};
