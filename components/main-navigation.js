@@ -1,6 +1,11 @@
 import Link from 'next/link';
+import { useSession, signOut } from "next-auth/react"
 
-function MainNavigation() {
+function MainNavigation () {
+	const { data: session } = useSession()
+	const signOutHandler = () => {
+		signOut()
+	}
 	return (
 		<header className='flex justify-around items-center h-20 w-full bg-orange-400'>
 			<Link href='/'>
@@ -8,20 +13,20 @@ function MainNavigation() {
 			</Link>
 			<nav>
 				<ul className='flex gap-10'>
-					<li className='border px-3 py-2 hover:bg-slate-200'>
+					{!session && <li className='border px-3 py-2 hover:bg-slate-200'>
 						<Link
 							className='px-3 py-2'
 							href='/auth/login'>
 							Login
 						</Link>
-					</li>
-					<li className='border px-3 py-2 hover:bg-slate-200'>
+					</li>}
+					{!session && <li className='border px-3 py-2 hover:bg-slate-200'>
 						<Link
 							className='px-3 py-2'
 							href='/auth/register'>
 							Register
 						</Link>
-					</li>
+					</li>}
 					<li className='border px-3 py-2 hover:bg-slate-200'>
 						<Link
 							className='px-3 py-2'
@@ -29,11 +34,11 @@ function MainNavigation() {
 							Profile
 						</Link>
 					</li>
-					<li>
-						<button className='border bg-green-300 rounded-2xl px-3 py-2 hover:bg-slate-200'>
+					{session && <li>
+						<button onClick={signOutHandler} className='border bg-green-300 rounded-2xl px-3 py-2 hover:bg-slate-200'>
 							Logout
 						</button>
-					</li>
+					</li>}
 				</ul>
 			</nav>
 		</header>
