@@ -1,10 +1,17 @@
 import Link from 'next/link.js';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { HiFingerPrint } from 'react-icons/hi';
 
 const register = () => {
+	const [type, setType] = useState(true);
+	const typeToggler = () => {
+		setType(!type);
+	};
+
 	const nameInputRef = useRef();
 	const emailInputRef = useRef();
 	const passwordInputRef = useRef();
+	const cpasswordInputRef = useRef();
 	const createUser = async (name, email, password) => {
 		const response = await fetch('/api/auth/signup', {
 			method: 'POST',
@@ -127,12 +134,56 @@ const register = () => {
 
 								<input
 									id='password'
-									type='password'
+									type={type ? 'password' : 'text'}
 									name='password'
 									ref={passwordInputRef}
 									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 									placeholder='Password'
 								/>
+								<button
+									onClick={typeToggler}
+									type='button'
+									className='absolute top-[5px] right-3 cursor-pointer p-2'>
+									<HiFingerPrint />
+								</button>
+							</div>
+						</div>
+						<div className='flex flex-col mb-6'>
+							<label
+								htmlFor='cpassword'
+								className='mb-1 text-xs sm:text-sm tracking-wide text-gray-600'>
+								Confirm Password:
+							</label>
+							<div className='relative'>
+								<div className='inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400'>
+									<span>
+										<svg
+											className='h-6 w-6'
+											fill='none'
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth='2'
+											viewBox='0 0 24 24'
+											stroke='currentColor'>
+											<path d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z' />
+										</svg>
+									</span>
+								</div>
+
+								<input
+									id='cpassword'
+									type={type ? 'password' : 'text'}
+									name='cpassword'
+									ref={cpasswordInputRef}
+									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+									placeholder='Confirm Password'
+								/>
+								<button
+									onClick={typeToggler}
+									type='button'
+									className='absolute top-[5px] right-3 cursor-pointer p-2'>
+									<HiFingerPrint />
+								</button>
 							</div>
 						</div>
 						<div className='flex w-full'>
