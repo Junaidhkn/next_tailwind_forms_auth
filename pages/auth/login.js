@@ -1,3 +1,4 @@
+import Image from 'next/image.js';
 import Link from 'next/link.js';
 import React from 'react';
 
@@ -8,7 +9,14 @@ const login = () => {
 				<div className='font-medium self-center text-xl sm:text-2xl uppercase text-gray-800'>
 					Login To Your Account
 				</div>
-				<button className='relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200'>
+				<button className='flex items-center justify-center gap-5 relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200'>
+					<Image
+						className=' w-[40px] h-auto '
+						src='/Images/google.svg'
+						width={30}
+						height={30}
+						alt='Google'
+					/>
 					<span>Login with Google</span>
 				</button>
 				<div className='relative mt-10 h-px bg-gray-300'>
