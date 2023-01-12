@@ -11,8 +11,10 @@ const profile = () => {
 			<div className='font-medium self-center text-xl sm:text-3xl text-gray-800'>
 				User Profile
 			</div>
-			<div className='mt-4 self-center text-xl sm:text-sm text-gray-800'>
-				Forgot Password Page
+			<div className='flex flex-col justify-center items-center mt-4 self-center text-xl sm:text-sm text-gray-800'>
+				<h2 className='font-4xl font-bold'>Profile Page (Authorized!)</h2>
+				<h3>Name</h3>
+				<h3>Email</h3>
 			</div>
 			<div className='mt-10'>
 				<form>
