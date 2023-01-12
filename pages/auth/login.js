@@ -1,4 +1,5 @@
 import Image from 'next/image.js';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link.js';
 import { useState } from 'react';
 import { HiFingerPrint } from 'react-icons/hi';
@@ -8,13 +9,19 @@ const login = () => {
 	const typeToggler = () => {
 		setType(!type);
 	};
+
+	const handleGoogleSignIn = async () => {
+		signIn('google', { callbackUrl: 'http://localhost:3000' });
+	};
 	return (
 		<div className='min-h-screen flex flex-col items-center justify-center bg-gray-300'>
 			<div className='flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md'>
 				<div className='font-medium self-center text-xl sm:text-2xl uppercase text-gray-800'>
 					Login To Your Account
 				</div>
-				<button className='flex items-center justify-center gap-5 relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200'>
+				<button
+					onClick={handleGoogleSignIn}
+					className='flex items-center justify-center gap-5 relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200'>
 					<Image
 						className=' w-[40px] h-auto '
 						src='/Images/google.svg'
