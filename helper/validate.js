@@ -21,7 +21,7 @@ export const validateRegister = ( values ) => {
    const errors = {};
    if ( !values.name ) {
       errors.name = 'Required';
-   } else if ( values.name.length > 15 && values.name.length <= 3 ) {
+   } else if ( values.name.length > 15 && values.name.length < 3 ) {
       errors.name = 'Must be greater than 2 and less that 15 characters';
    }
 
@@ -41,7 +41,7 @@ export const validateRegister = ( values ) => {
    if ( !values.cpassword ) {
       errors.cpassword = 'Required';
    } else if ( values.cpassword !== values.password ) {
-      errors.password = "Passwords does not match!";
+      errors.cpassword = "Passwords does not match!";
    }
 
    return errors;

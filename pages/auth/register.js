@@ -57,7 +57,7 @@ const register = () => {
 
 	return (
 		<div className='min-h-screen flex flex-col items-center justify-center bg-gray-100'>
-			<div className='flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-3xl w-50 max-w-md'>
+			<div className='flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-3xl w-96 max-w-md'>
 				<div className='font-medium self-center text-xl sm:text-3xl text-gray-800'>
 					Join us Now
 				</div>
@@ -96,6 +96,7 @@ const register = () => {
 									placeholder='Enter your name'
 								/>
 							</div>
+							{formik.errors.name && formik.touched.name ? <span className='text-red-600'>{formik.errors.name}</span> : <span></span>}
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -127,6 +128,7 @@ const register = () => {
 									placeholder='E-Mail Address'
 								/>
 							</div>
+							{formik.errors.email && formik.touched.email ? <span className='text-red-600'>{formik.errors.email}</span> : <span></span>}
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -166,6 +168,7 @@ const register = () => {
 									<HiFingerPrint />
 								</button>
 							</div>
+							{formik.errors.password && formik.touched.password ? <span className='text-red-600'>{formik.errors.password}</span> : <span></span>}
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -205,6 +208,7 @@ const register = () => {
 									<HiFingerPrint />
 								</button>
 							</div>
+							{formik.errors.cpassword && formik.touched.cpassword ? <span className='text-red-600'>{formik.errors.cpassword}</span> : <span></span>}
 						</div>
 						<div className='flex w-full'>
 							<button
