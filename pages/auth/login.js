@@ -24,10 +24,11 @@ const login = () => {
 	} )
 
 
-
 	const handleGoogleSignIn = async () => {
 		signIn( 'google', { callbackUrl: 'http://localhost:3000' } );
 	};
+	const classes = 'text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+
 	return (
 		<div className='min-h-screen flex flex-col items-center justify-center bg-gray-300'>
 			<div className='flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md'>
@@ -79,13 +80,13 @@ const login = () => {
 									id='email'
 									type='email'
 									name='email'
-									onChange={formik.handleChange}
-									value={formik.values.email}
-									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+									{...formik.getFieldProps( 'email' )}
+									// onChange={formik.handleChange}
+									// value={formik.values.email}
+									className={`${classes} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : 'border-blue-400'}`}
 									placeholder='E-Mail Address'
 								/>
 							</div>
-							{formik.errors.email && formik.touched.email ? <span className='text-red-600'>{formik.errors.email}</span> : <span></span>}
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -112,9 +113,8 @@ const login = () => {
 									id='password'
 									type={type ? 'password' : 'text'}
 									name='password'
-									onChange={formik.handleChange}
-									value={formik.values.password}
-									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+									{...formik.getFieldProps( 'password' )}
+									className={`${classes} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : 'border-blue-400'}`}
 									placeholder='Password'
 								/>
 								<button
@@ -125,7 +125,7 @@ const login = () => {
 								</button>
 
 							</div>
-							{formik.errors.password && formik.touched.password ? <span className='text-red-600'>{formik.errors.password}</span> : <span></span>}
+
 						</div>
 
 						<div className='flex items-center mb-6 -mt-4'>

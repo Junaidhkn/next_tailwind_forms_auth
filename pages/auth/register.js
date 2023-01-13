@@ -54,7 +54,7 @@ const register = () => {
 		passwordInputRef.current.value = '';
 		cpasswordInputRef.current.value = '';
 	};
-
+	const classes = 'text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
 	return (
 		<div className='min-h-screen flex flex-col items-center justify-center bg-gray-100'>
 			<div className='flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-3xl w-96 max-w-md'>
@@ -92,11 +92,11 @@ const register = () => {
 									name='name'
 									ref={nameInputRef}
 									{...formik.getFieldProps( 'name' )}
-									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+									className={`${classes} ${formik.errors.name && formik.touched.name ? 'border-rose-600' : 'border-blue-400'}`}
 									placeholder='Enter your name'
 								/>
 							</div>
-							{formik.errors.name && formik.touched.name ? <span className='text-red-600'>{formik.errors.name}</span> : <span></span>}
+							{/* {formik.errors.name && formik.touched.name ? <span className='text-red-600'>{formik.errors.name}</span> : <span></span>} */}
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -124,11 +124,11 @@ const register = () => {
 									name='email'
 									ref={emailInputRef}
 									{...formik.getFieldProps( 'email' )}
-									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+									className={`${classes} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : 'border-blue-400'}`}
 									placeholder='E-Mail Address'
 								/>
 							</div>
-							{formik.errors.email && formik.touched.email ? <span className='text-red-600'>{formik.errors.email}</span> : <span></span>}
+
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -158,7 +158,7 @@ const register = () => {
 									name='password'
 									ref={passwordInputRef}
 									{...formik.getFieldProps( 'password' )}
-									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+									className={`${classes} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : 'border-blue-400'}`}
 									placeholder='Password'
 								/>
 								<button
@@ -168,7 +168,7 @@ const register = () => {
 									<HiFingerPrint />
 								</button>
 							</div>
-							{formik.errors.password && formik.touched.password ? <span className='text-red-600'>{formik.errors.password}</span> : <span></span>}
+
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -198,7 +198,7 @@ const register = () => {
 									name='cpassword'
 									ref={cpasswordInputRef}
 									{...formik.getFieldProps( 'cpassword' )}
-									className='text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+									className={`${classes} ${formik.errors.cpassword && formik.touched.cpassword ? 'border-rose-600' : 'border-blue-400'}`}
 									placeholder='Confirm Password'
 								/>
 								<button
@@ -208,7 +208,7 @@ const register = () => {
 									<HiFingerPrint />
 								</button>
 							</div>
-							{formik.errors.cpassword && formik.touched.cpassword ? <span className='text-red-600'>{formik.errors.cpassword}</span> : <span></span>}
+
 						</div>
 						<div className='flex w-full'>
 							<button
