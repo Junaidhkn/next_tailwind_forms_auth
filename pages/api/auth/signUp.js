@@ -15,6 +15,15 @@ export default async function handler ( req, res ) {
          } )
          return;
       }
+      //   Check User Duplication
+      const existingUser = await User.findOne( { email } )
+      if ( existingUser ) {
+         res.status( 422 ).json( {
+            message: 'User already exists!'
+         } )
+         return;
+      }
+
       const saltedPassword = await hash( password, 12 )
 
       const newUser = new User( { name: name, email: email, password: saltedPassword } )
