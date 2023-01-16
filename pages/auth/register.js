@@ -3,58 +3,71 @@ import { useRef, useState } from 'react';
 import { HiFingerPrint } from 'react-icons/hi';
 import { useFormik } from 'formik';
 import { validateRegister } from '../../helper/validate.js';
+import { useRouter } from 'next/router.js';
 
 const register = () => {
-	const [type, setType] = useState( true );
+	const router = useRouter();
+	const [type, setType] = useState(true);
 	const typeToggler = () => {
-		setType( !type );
+		setType(!type);
 	};
 
-	const formik = useFormik( {
+	const formik = useFormik({
 		initialValues: {
 			name: '',
 			email: '',
 			password: '',
-			cpassword: ''
+			cpassword: '',
 		},
 		validate: validateRegister,
-		onSubmit: async ( values ) => {
-			console.log( values )
-		}
-	} )
+		onSubmit: async (values) => {
+			const options = {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(values),
+			};
+
+			await fetch('http://localhost:3000/api/auth/signup', options)
+				.then((res) => res.json())
+				.then((data) => {
+					if (data) router.push('http://localhost:3000/auth/login');
+				});
+		},
+	});
 
 	const nameInputRef = useRef();
 	const emailInputRef = useRef();
 	const passwordInputRef = useRef();
 	const cpasswordInputRef = useRef();
-	const createUser = async ( name, email, password ) => {
-		const response = await fetch( '/api/auth/signup', {
-			method: 'POST',
-			body: JSON.stringify( { name, email, password } ),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		} );
-		const data = await response.json();
-		if ( !response.ok ) {
-			throw new Error( data.message || 'Something Went Wrong!' );
-		}
+	// const createUser = async (name, email, password) => {
+	// 	const response = await fetch('/api/auth/signup', {
+	// 		method: 'POST',
+	// 		body: JSON.stringify({ name, email, password }),
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 		},
+	// 	});
+	// 	const data = await response.json();
+	// 	if (!response.ok) {
+	// 		throw new Error(data.message || 'Something Went Wrong!');
+	// 	}
 
-		return data;
-	};
+	// 	return data;
+	// };
 
-	const submitHandler = ( e ) => {
-		e.preventDefault();
-		const name = nameInputRef.current.value;
-		const email = emailInputRef.current.value;
-		const password = passwordInputRef.current.value;
-		createUser( name, email, password );
-		nameInputRef.current.value = '';
-		emailInputRef.current.value = '';
-		passwordInputRef.current.value = '';
-		cpasswordInputRef.current.value = '';
-	};
-	const classes = 'text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+	// const submitHandler = (e) => {
+	// 	e.preventDefault();
+	// 	const name = nameInputRef.current.value;
+	// 	const email = emailInputRef.current.value;
+	// 	const password = passwordInputRef.current.value;
+	// 	createUser(name, email, password);
+	// 	nameInputRef.current.value = '';
+	// 	emailInputRef.current.value = '';
+	// 	passwordInputRef.current.value = '';
+	// 	cpasswordInputRef.current.value = '';
+	// };
+	const classes =
+		'text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400';
 	return (
 		<div className='min-h-screen flex flex-col items-center justify-center bg-gray-100'>
 			<div className='flex flex-col bg-white shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-3xl w-96 max-w-md'>
@@ -91,8 +104,12 @@ const register = () => {
 									type='name'
 									name='name'
 									ref={nameInputRef}
-									{...formik.getFieldProps( 'name' )}
-									className={`${classes} ${formik.errors.name && formik.touched.name ? 'border-rose-600' : 'border-blue-400'}`}
+									{...formik.getFieldProps('name')}
+									className={`${classes} ${
+										formik.errors.name && formik.touched.name
+											? 'border-rose-600'
+											: 'border-blue-400'
+									}`}
 									placeholder='Enter your name'
 								/>
 							</div>
@@ -123,12 +140,15 @@ const register = () => {
 									type='email'
 									name='email'
 									ref={emailInputRef}
-									{...formik.getFieldProps( 'email' )}
-									className={`${classes} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : 'border-blue-400'}`}
+									{...formik.getFieldProps('email')}
+									className={`${classes} ${
+										formik.errors.email && formik.touched.email
+											? 'border-rose-600'
+											: 'border-blue-400'
+									}`}
 									placeholder='E-Mail Address'
 								/>
 							</div>
-
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -157,8 +177,12 @@ const register = () => {
 									type={type ? 'password' : 'text'}
 									name='password'
 									ref={passwordInputRef}
-									{...formik.getFieldProps( 'password' )}
-									className={`${classes} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : 'border-blue-400'}`}
+									{...formik.getFieldProps('password')}
+									className={`${classes} ${
+										formik.errors.password && formik.touched.password
+											? 'border-rose-600'
+											: 'border-blue-400'
+									}`}
 									placeholder='Password'
 								/>
 								<button
@@ -168,7 +192,6 @@ const register = () => {
 									<HiFingerPrint />
 								</button>
 							</div>
-
 						</div>
 						<div className='flex flex-col mb-6'>
 							<label
@@ -197,8 +220,12 @@ const register = () => {
 									type={type ? 'password' : 'text'}
 									name='cpassword'
 									ref={cpasswordInputRef}
-									{...formik.getFieldProps( 'cpassword' )}
-									className={`${classes} ${formik.errors.cpassword && formik.touched.cpassword ? 'border-rose-600' : 'border-blue-400'}`}
+									{...formik.getFieldProps('cpassword')}
+									className={`${classes} ${
+										formik.errors.cpassword && formik.touched.cpassword
+											? 'border-rose-600'
+											: 'border-blue-400'
+									}`}
 									placeholder='Confirm Password'
 								/>
 								<button
@@ -208,7 +235,6 @@ const register = () => {
 									<HiFingerPrint />
 								</button>
 							</div>
-
 						</div>
 						<div className='flex w-full'>
 							<button

@@ -5,29 +5,38 @@ import { useState } from 'react';
 import { HiFingerPrint } from 'react-icons/hi';
 import { useFormik } from 'formik';
 import { validateLogin } from '../../helper/validate.js';
+import { useRouter } from 'next/router.js';
 
 const login = () => {
-	const [type, setType] = useState( true );
+	const router = useRouter();
+	const [type, setType] = useState(true);
 	const typeToggler = () => {
-		setType( !type );
+		setType(!type);
 	};
 
-	const formik = useFormik( {
+	const formik = useFormik({
 		initialValues: {
 			email: '',
-			password: ''
+			password: '',
 		},
 		validate: validateLogin,
-		onSubmit: async ( values ) => {
-			console.log( values )
-		}
-	} )
+		onSubmit: async (values) => {
+			const status = await signIn('credentials', {
+				redirect: false,
+				email: values.email,
+				password: values.password,
+				callbackUrl: '/',
+			});
 
+			if (status.ok) router.push(status.url);
+		},
+	});
 
 	const handleGoogleSignIn = async () => {
-		signIn( 'google', { callbackUrl: 'http://localhost:3000' } );
+		signIn('google', { callbackUrl: 'http://localhost:3000' });
 	};
-	const classes = 'text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400'
+	const classes =
+		'text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400';
 
 	return (
 		<div className='min-h-screen flex flex-col items-center justify-center bg-gray-300'>
@@ -80,10 +89,14 @@ const login = () => {
 									id='email'
 									type='email'
 									name='email'
-									{...formik.getFieldProps( 'email' )}
+									{...formik.getFieldProps('email')}
 									// onChange={formik.handleChange}
 									// value={formik.values.email}
-									className={`${classes} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : 'border-blue-400'}`}
+									className={`${classes} ${
+										formik.errors.email && formik.touched.email
+											? 'border-rose-600'
+											: 'border-blue-400'
+									}`}
 									placeholder='E-Mail Address'
 								/>
 							</div>
@@ -113,8 +126,12 @@ const login = () => {
 									id='password'
 									type={type ? 'password' : 'text'}
 									name='password'
-									{...formik.getFieldProps( 'password' )}
-									className={`${classes} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : 'border-blue-400'}`}
+									{...formik.getFieldProps('password')}
+									className={`${classes} ${
+										formik.errors.password && formik.touched.password
+											? 'border-rose-600'
+											: 'border-blue-400'
+									}`}
 									placeholder='Password'
 								/>
 								<button
@@ -123,9 +140,7 @@ const login = () => {
 									className='absolute top-[5px] right-3 cursor-pointer p-2'>
 									<HiFingerPrint />
 								</button>
-
 							</div>
-
 						</div>
 
 						<div className='flex items-center mb-6 -mt-4'>

@@ -34,5 +34,7 @@ export default async function handler ( req, res ) {
       } catch ( err ) {
          res.status( 500 ).json( err );
       }
+   } else {
+      return res.status( 400 ).json( { message: 'Only POst Requests Allowed' } );
    }
 }
